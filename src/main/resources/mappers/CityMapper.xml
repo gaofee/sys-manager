@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaofei.sysmanager.mapper.CityMapper">
+    <!--配置一对多的关系-->
+    <resultMap id="cityMap" type="com.gaofei.sysmanager.domain.City">
+        <id column="id" property="id"></id>
+        <result column="pid" property="pid"></result>
+        <result column="cityname" property="cityname"></result>
+        <result column="type" property="type"></result>
+
+
+        <collection property="children" ofType="com.gaofei.sysmanager.domain.City" column="id"  select="getCitys"></collection>
+
+    </resultMap>
+
+    <select id="getCitys" resultMap="cityMap">
+        select * from city where pid=#{pid}
+    </select>
+</mapper>

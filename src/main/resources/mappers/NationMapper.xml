@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaofei.sysmanager.mapper.NationMapper">
+
+    <!--配置一对多的关系-->
+    <resultMap id="nationMap" type="com.gaofei.sysmanager.domain.Nation">
+        <id column="id" property="id"></id>
+        <result column="code" property="code"></result>
+        <result column="province" property="province"></result>
+        <result column="city" property="city"></result>
+        <result column="district" property="district"></result>
+        <result column="parent" property="parent"></result>
+
+        <collection property="children" ofType="com.gaofei.sysmanager.domain.Nation" column="id"  select="getNations"></collection>
+
+    </resultMap>
+
+    <select id="getNations" resultMap="nationMap">
+        select * from nation where parent=#{parentId}
+    </select>
+
+</mapper>

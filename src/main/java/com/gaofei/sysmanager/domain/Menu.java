@@ -6,13 +6,16 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author gaofei
@@ -33,7 +36,7 @@ public class Menu extends Model<Menu> {
     private String path;
 
     private String component;
-
+    @JsonProperty("label")
     private String name;
 
     @TableField("iconCls")
@@ -51,6 +54,9 @@ public class Menu extends Model<Menu> {
     private Boolean enabled;
 
     private LocalDateTime createTime;
+
+    @TableField(exist = false)
+    private List<Menu> children;
 
 
     @Override

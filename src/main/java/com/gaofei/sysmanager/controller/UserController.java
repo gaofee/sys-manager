@@ -7,7 +7,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gaofei.domain.FileResult;
 import com.gaofei.service.FileService;
 import com.gaofei.sysmanager.common.CommonResult;
+import com.gaofei.sysmanager.domain.Role;
 import com.gaofei.sysmanager.domain.User;
+import com.gaofei.sysmanager.domain.UserRole;
+import com.gaofei.sysmanager.service.IUserRoleService;
 import com.gaofei.sysmanager.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +38,29 @@ public class UserController {
 
     @Autowired
     FileService fileService;
+
+    @Autowired
+    IUserRoleService userRoleService;
+
+    @RequestMapping("setRole")
+    public CommonResult setRole(Integer uid, @RequestBody List<Role> checkedArr){
+        System.out.println(uid+"***************"+checkedArr);
+        //根据uid 更新或者保存对应的角色信息
+        //1.先根据用户id删除所有的角色
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("uid",uid);
+        userRoleService.remove(wrapper);
+        checkedArr.forEach(role->{
+            UserRole userRole = new UserRole();
+            userRole.setRid(role.getId());
+            userRole.setUid(uid);
+            //2.添加中间表
+            userRoleService.save(userRole);
+
+        });
+
+        return CommonResult.success(null);
+    }
 
 
     @RequestMapping("list")

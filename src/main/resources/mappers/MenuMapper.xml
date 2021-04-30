@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gaofei.sysmanager.mapper.MenuMapper">
+    <resultMap id="menuMap" type="com.gaofei.sysmanager.domain.Menu" autoMapping="true">
+        <id column="id" property="id"/>
+        <collection property="children" column="id" ofType="com.gaofei.sysmanager.domain.Menu" select="getTree"></collection>
+    </resultMap>
+    <select id="getTree" resultMap="menuMap">
+        select * from menu  where parentId = #{parentId}
+    </select>
 
+
+
+
+    <select id="findMenusByUid"  resultType="com.gaofei.sysmanager.domain.Menu">
+
+        select m.* from menu m
+        LEFT JOIN menu_role mr ON mr.mid=m.id
+        LEFT JOIN role r ON r.id = mr.rid
+        LEFT JOIN user_role ur ON ur.rid = r.id
+        LEFT JOIN `user` u ON u.id = ur.uid
+        where  u.id = #{uid} and m.parentId =#{parentId}
+
+    </select>
 </mapper>

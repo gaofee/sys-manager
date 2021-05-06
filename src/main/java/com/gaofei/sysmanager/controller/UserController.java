@@ -42,6 +42,20 @@ public class UserController {
     @Autowired
     IUserRoleService userRoleService;
 
+
+    @RequestMapping("login")
+    public CommonResult login(@RequestBody User user){
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", user.getUsername());
+        wrapper.eq("password", user.getPassword());
+        List<User> list = userService.list(wrapper);
+        //从数据库对比用户名和密码是否正确,如果能查询出来,说明正确
+        if(list!=null&&list.size()>0){
+            return CommonResult.success(list.get(0));
+        }
+        return CommonResult.success(null, "没有此用户");
+    }
+
     @RequestMapping("setRole")
     public CommonResult setRole(Integer uid, @RequestBody List<Role> checkedArr){
         System.out.println(uid+"***************"+checkedArr);

@@ -1,6 +1,7 @@
 package com.gaofei.sysmanager.controller;
 
 
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -45,6 +46,8 @@ public class UserController {
 
     @RequestMapping("login")
     public CommonResult login(@RequestBody User user){
+        String newPass = SecureUtil.md5(user.getPassword());
+        user.setPassword(newPass);
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("username", user.getUsername());
         wrapper.eq("password", user.getPassword());
@@ -88,6 +91,12 @@ public class UserController {
 
     @RequestMapping("add")
     public CommonResult add( @RequestBody User user){
+        //获取用户的密码,加密之后再存入实体类,保存
+        String password = user.getPassword();
+        //为密码进行md5加密,使用糊涂工具类
+        String secPassword = SecureUtil.md5(password);
+        user.setPassword(secPassword);
+
         System.out.println(user);
         boolean save = userService.saveOrUpdate(user);
         return CommonResult.success(save,"保存成功");

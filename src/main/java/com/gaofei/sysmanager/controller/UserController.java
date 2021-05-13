@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gaofei.domain.FileResult;
 import com.gaofei.service.FileService;
 import com.gaofei.sysmanager.common.CommonResult;
+import com.gaofei.sysmanager.common.MsgUtil;
 import com.gaofei.sysmanager.domain.Role;
 import com.gaofei.sysmanager.domain.User;
 import com.gaofei.sysmanager.domain.UserRole;
@@ -43,6 +44,9 @@ public class UserController {
     @Autowired
     IUserRoleService userRoleService;
 
+    @Autowired
+    MsgUtil util;
+
 
     @RequestMapping("login")
     public CommonResult login(@RequestBody User user){
@@ -55,6 +59,7 @@ public class UserController {
         //从数据库对比用户名和密码是否正确,如果能查询出来,说明正确
         if(list!=null&&list.size()>0){
             return CommonResult.success(list.get(0));
+//            util.sendTextEmail("");
         }
         return CommonResult.success(null, "没有此用户");
     }

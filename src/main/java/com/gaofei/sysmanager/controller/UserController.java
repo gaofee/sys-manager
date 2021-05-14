@@ -96,11 +96,15 @@ public class UserController {
 
     @RequestMapping("add")
     public CommonResult add( @RequestBody User user){
-        //获取用户的密码,加密之后再存入实体类,保存
-        String password = user.getPassword();
-        //为密码进行md5加密,使用糊涂工具类
-        String secPassword = SecureUtil.md5(password);
-        user.setPassword(secPassword);
+        //防止修改的时候,把原来的密码加密
+        if(user.getId()==null||user.getId()==0){
+            //获取用户的密码,加密之后再存入实体类,保存
+            String password = user.getPassword();
+            //为密码进行md5加密,使用糊涂工具类
+            String secPassword = SecureUtil.md5(password);
+            user.setPassword(secPassword);
+
+        }
 
         System.out.println(user);
         boolean save = userService.saveOrUpdate(user);

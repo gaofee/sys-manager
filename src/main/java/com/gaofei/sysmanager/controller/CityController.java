@@ -27,6 +27,8 @@ public class CityController {
     @RequestMapping("list")
     public List<City> list(){
         List<City> citys = cityService.getCitys(1);
+
+
         return  citys;
     }
 }

@@ -42,6 +42,11 @@ public class User extends Model<User> {
     private Date birthday;
 
     /**
+     * 码云id
+     */
+    private String giteeid;
+
+    /**
      * 手机号码
      */
     private String phone;

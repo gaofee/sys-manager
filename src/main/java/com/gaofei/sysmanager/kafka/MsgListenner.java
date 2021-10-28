@@ -26,7 +26,7 @@ public class MsgListenner  {
         String value = stringStringConsumerRecord.value();
 //        System.out.println(key+":"+value);
         log.info("key:{},value:{}",key,value);
-
+//士大夫撒旦
         if(value.equals("msg")){
             msgUtil.sendTextEmail("79527743@qq.com","这是我发送标题","这是内容!!!");
         }

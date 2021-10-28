@@ -15,7 +15,8 @@ import java.util.Date;
 @Component
 public class MsgUtil {
 
-    private String from="2312949906@qq.com";
+    //发件人
+    private String from="1813863124@qq.com";
 
     @Autowired
     private JavaMailSender sender;

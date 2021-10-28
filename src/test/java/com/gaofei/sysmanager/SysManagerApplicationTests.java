@@ -14,13 +14,9 @@ class SysManagerApplicationTests {
 
     @Test
     void contextLoads() {
-        DesensitizedUtil.mobilePhone("18049531999");
-
-        int i = "重地".hashCode();
-        int e = "通话".hashCode();
-//        System.out.println(c);
-        System.out.println(i);
-        System.out.println(e);
+        String s = "1000";
+        long l = Long.parseLong(s);
+        System.out.println(l);
 
     }
 

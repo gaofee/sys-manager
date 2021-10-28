@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @author : gaofee
  * @date : 16:06 2021/7/30
- * @码云地址 : https://gitee.com/itgaofee
+ * @码云地址 : feege.gitee.io
  */
 @Controller
 @CrossOrigin

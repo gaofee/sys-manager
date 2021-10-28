@@ -9,7 +9,6 @@ import com.gaofei.sysmanager.service.IMenuRoleService;
 import com.gaofei.sysmanager.service.IMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -44,6 +43,7 @@ public class MenuController {
 
     @RequestMapping("findMenuByUid")
     public List<Menu> findMenuByUid (Integer uid){
+        log.info("dayin:{}",uid);
         //根据用户id查询一级菜单
         List<Menu> oneL = menuService.findMenusByUid(uid,1);
         System.out.println("^^^^^"+oneL);
@@ -52,6 +52,7 @@ public class MenuController {
 
     private List<Menu> selectChild(Integer uid,List<Menu> oneL) {
         List<Menu> oneList = new ArrayList<>();
+
         //遍历一级菜单
         if(oneL!=null&& oneL.size()>0){
             oneL.forEach(oneMenu -> {

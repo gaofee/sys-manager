@@ -15,6 +15,7 @@ import com.gaofei.sysmanager.domain.UserRole;
 import com.gaofei.sysmanager.service.IUserRoleService;
 import com.gaofei.sysmanager.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,8 +49,16 @@ public class UserController {
     MsgUtil util;
 
 
+    @Autowired
+    KafkaTemplate<String,String> kafkaTemplate;
+
     @RequestMapping("login")
     public CommonResult login(@RequestBody User user){
+
+        //发送消息
+        kafkaTemplate.send("1904a","mail-msg","msg");
+
+
         String newPass = SecureUtil.md5(user.getPassword());
         user.setPassword(newPass);
         QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -84,7 +93,7 @@ public class UserController {
         return CommonResult.success(null);
     }
 
-
+    //统一结果集
     @RequestMapping("list")
     public CommonResult list( String name , @RequestParam(defaultValue = "1") long pageNum, @RequestParam(defaultValue = "5")long pageSize){
         System.out.println(name+"==");

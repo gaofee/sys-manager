@@ -83,10 +83,10 @@
         </dependency>-->
 
         <!--加入kafka的配置-->
-       <!-- <dependency>
+        <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!--加入es依赖配置-->
        <!-- <dependency>
@@ -208,11 +208,11 @@
         </dependency>
 
         <!--接口幂等性处理-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.pig4cloud.plugin</groupId>
             <artifactId>idempotent-spring-boot-starter</artifactId>
             <version>0.0.4</version>
-        </dependency>
+        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <dependency>

@@ -15,8 +15,6 @@ import com.gaofei.sysmanager.domain.UserRole;
 //import com.gaofei.sysmanager.es.EsUserResp;
 import com.gaofei.sysmanager.service.IUserRoleService;
 import com.gaofei.sysmanager.service.IUserService;
-import com.pig4cloud.plugin.idempotent.annotation.Idempotent;
-import com.pig4cloud.plugin.idempotent.exception.IdempotentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,7 +60,7 @@ public class UserController {
     @RequestMapping("login")
 
     //接口幂等性处理!!!
-    @Idempotent(key = "#user.username",expireTime = 1,info = "请勿重复提交!!!")
+//    @Idempotent(key = "#user.username",expireTime = 1,info = "请勿重复提交!!!")
 
     public CommonResult login(@RequestBody User user){
 

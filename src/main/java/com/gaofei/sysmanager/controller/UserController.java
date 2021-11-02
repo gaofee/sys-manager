@@ -16,6 +16,9 @@ import com.gaofei.sysmanager.domain.UserRole;
 import com.gaofei.sysmanager.service.IUserRoleService;
 import com.gaofei.sysmanager.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,12 +52,15 @@ public class UserController {
     MsgUtil util;
 
 
-//    @Autowired
-//    KafkaTemplate<String,String> kafkaTemplate;
+   /* @Autowired
+    KafkaTemplate<String,String> kafkaTemplate;
 //
 //
 //    @Autowired
 //    EsUserResp esUserResp;
+
+    @Autowired
+    RedisTemplate<String,String> redisTemplate;*/
 
 
     @RequestMapping("login")
@@ -64,8 +70,26 @@ public class UserController {
 
     public CommonResult login(@RequestBody User user){
 
-//        //发送消息(
-//        kafkaTemplate.send("1904a","mail-msg","msg");
+
+        //如何解决消息重复消费问题?
+        //发消息的时候 kafkaTemplate.send("1904a", "mail-msg", "msg");中间的参数是一个文艺的key标识
+
+//        //发送消息,生产者的消息确认机制
+//        ListenableFuture<SendResult<String, String>> send = kafkaTemplate.send("1904a", "mail-msg", "msg");
+//        redisTemplate.opsForValue().set("mail-msg","mail-msg");//往reids中存入唯一标识
+//        send.addCallback(new ListenableFutureCallback(){
+
+//            @Override
+//            public void onSuccess(Object o) {
+//                System.out.println("消息发送成功了!!!!");
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable throwable) {
+//                System.out.println("消息发送失败会执行这里!!!");
+//                //再发一次
+//            }
+//        });
 //        User user1 = new User();
 //        user1.setName("zhangsan");
 //        user1.setAddress("北京");

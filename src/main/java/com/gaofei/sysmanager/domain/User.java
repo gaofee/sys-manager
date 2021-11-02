@@ -1,14 +1,17 @@
 package com.gaofei.sysmanager.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -22,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+//@Document(indexName = "users",type = "user")
 public class User extends Model<User> {
 
     private static final long serialVersionUID = 1L;
@@ -30,12 +34,18 @@ public class User extends Model<User> {
      * hrID
      */
     @TableId(value = "id", type = IdType.AUTO)
+//    @Id
     private Integer id;
 
     /**
      * 姓名
      */
+//    @Field
     private String name;
+
+
+    @TableField(exist = false)
+    private BigDecimal money;
 
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -49,6 +59,7 @@ public class User extends Model<User> {
     /**
      * 手机号码
      */
+//    @Field
     private String phone;
 
     /**

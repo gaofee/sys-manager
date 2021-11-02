@@ -1,12 +1,11 @@
 package com.gaofei.sysmanager;
 
 import com.gaofei.sysmanager.common.MsgUtil;
+import com.gaofei.sysmanager.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.core.KafkaTemplate;
 
-import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -19,8 +18,16 @@ public class CountStr {
     @Autowired
     MsgUtil msgUtil;
 
-    @Autowired
+   /* @Autowired
     KafkaTemplate<String,String> kafkaTemplate;
+
+    @Autowired
+    EsUserResp esUserResp;*/
+
+    @Test
+    public void testEsCRUD(){
+
+    }
 
     @Test
     public void countStr(){
@@ -28,7 +35,7 @@ public class CountStr {
         //2.发邮件
 //        msgUtil.sendTextEmail("79527743@qq.com","这是我发送标题","这是内容!!!");
         //往kafka发消息
-        kafkaTemplate.send("1904a","mail-msg","msg");
+//        kafkaTemplate.send("1904a","mail-msg","msg");
         //往kafka发消息
         //3.返回添加成功
     }

@@ -12,10 +12,12 @@ import com.gaofei.sysmanager.common.MsgUtil;
 import com.gaofei.sysmanager.domain.Role;
 import com.gaofei.sysmanager.domain.User;
 import com.gaofei.sysmanager.domain.UserRole;
+//import com.gaofei.sysmanager.es.EsUserResp;
 import com.gaofei.sysmanager.service.IUserRoleService;
 import com.gaofei.sysmanager.service.IUserService;
+import com.pig4cloud.plugin.idempotent.annotation.Idempotent;
+import com.pig4cloud.plugin.idempotent.exception.IdempotentException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,28 +51,44 @@ public class UserController {
     MsgUtil util;
 
 
-    @Autowired
-    KafkaTemplate<String,String> kafkaTemplate;
+//    @Autowired
+//    KafkaTemplate<String,String> kafkaTemplate;
+//
+//
+//    @Autowired
+//    EsUserResp esUserResp;
+
 
     @RequestMapping("login")
+
+    //接口幂等性处理!!!
+    @Idempotent(key = "#user.username",expireTime = 1,info = "请勿重复提交!!!")
+
     public CommonResult login(@RequestBody User user){
 
-        //发送消息
-        kafkaTemplate.send("1904a","mail-msg","msg");
+//        //发送消息(
+//        kafkaTemplate.send("1904a","mail-msg","msg");
+//        User user1 = new User();
+//        user1.setName("zhangsan");
+//        user1.setAddress("北京");
+//        esUserResp.save(user1);
+//        esUserResp.delete();
+//        List<User> zhangsan = esUserResp.findByName("zhangsan");
 
 
-        String newPass = SecureUtil.md5(user.getPassword());
-        user.setPassword(newPass);
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("username", user.getUsername());
-        wrapper.eq("password", user.getPassword());
-        List<User> list = userService.list(wrapper);
-        //从数据库对比用户名和密码是否正确,如果能查询出来,说明正确
-        if(list!=null&&list.size()>0){
-            return CommonResult.success(list.get(0));
-//            util.sendTextEmail("");
-        }
-        return CommonResult.success(null, "没有此用户");
+            String newPass = SecureUtil.md5(user.getPassword());
+            user.setPassword(newPass);
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
+            wrapper.eq("username", user.getUsername());
+            wrapper.eq("password", user.getPassword());
+            List<User> list = userService.list(wrapper);
+            //从数据库对比用户名和密码是否正确,如果能查询出来,说明正确
+            if(list!=null&&list.size()>0){
+                return CommonResult.success(list.get(0));
+    //            util.sendTextEmail("");
+            }
+            return CommonResult.success(null, "没有此用户");
+
     }
 
     @RequestMapping("setRole")

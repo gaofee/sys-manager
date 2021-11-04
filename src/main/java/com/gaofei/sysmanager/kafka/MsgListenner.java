@@ -26,7 +26,7 @@
 //    RedisTemplate<String,String> redisTemplate;*/
 //
 //
-//    @KafkaListener(topics = "1904a")
+//    @KafkaListener(topics = "1904a",containerFactory="ackContainerFactory" ,id="ack")
 //
 //    public void msg(ConsumerRecord<String, String> stringStringConsumerRecord, Acknowledgment ack) {
 //

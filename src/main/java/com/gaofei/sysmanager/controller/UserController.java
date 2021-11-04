@@ -63,11 +63,11 @@ public class UserController {
     RedisTemplate<String,String> redisTemplate;*/
 
 
-    @RequestMapping("login")
 
     //接口幂等性处理!!!
 //    @Idempotent(key = "#user.username",expireTime = 1,info = "请勿重复提交!!!")
 
+    @RequestMapping("login")
     public CommonResult login(@RequestBody User user){
 
 

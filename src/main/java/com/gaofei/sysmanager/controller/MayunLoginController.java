@@ -65,6 +65,8 @@ public class MayunLoginController {
         wrapper.eq("giteeid",giteeId);
         //根据giteeId查询本地用户id和姓名
         User one = userService.getOne(wrapper);
+        //如果one不存在,则让用户登录
+        //然后将登录的用户和giteeId绑定
 
         //4.登录成功
         resp.sendRedirect("http://localhost:8080/toLogin?uid="+one.getId()+"&name="+one.getName());
